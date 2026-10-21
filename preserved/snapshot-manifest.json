@@ -1,0 +1,177 @@
+{
+  "upstream": "https://github.com/dingminhua/dsh-connect-workbuddy",
+  "base_version": "4.12.0",
+  "base_commit": "4540f16e171843046a28e13fe4b9b90cb85af0b4",
+  "upstream_default_at_preservation": "61e7b2f3d291d6f6028a278a729a02da8a3ba327",
+  "saved_at_utc": "2026-10-21T15:31:26.253589+00:00",
+  "archive": "dsh-connect-workbuddy-4.12.0-local.zip",
+  "archive_sha256": "e403fc4cab4d59d4cd926e3c3ceb9181034ee65080a4559708556e7f42619f32",
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 460537,
+      "sha256": "799927a3dde4df15367a702eb9b13aa1ec10663c71164e077a43b14bf9034239"
+    },
+    {
+      "path": "cordis.patch.yml",
+      "bytes": 250,
+      "sha256": "df4f41aac3a4e9101d0bf7155464527742a3106dcf0ddd47e28b932808aee0c9"
+    },
+    {
+      "path": "docs/assets/account-pool-demo.html",
+      "bytes": 52746,
+      "sha256": "560f2b0f1fb6591ed0cbfb702fb9e6ceb516716f90cccde3508a8f1df06870f1"
+    },
+    {
+      "path": "docs/assets/dsh-connect-workbuddy-account-pool.png",
+      "bytes": 149551,
+      "sha256": "f3c364a254d9431c9c58caee4fee897fd495dcad83362a3170689a6a0d1f60d8"
+    },
+    {
+      "path": "docs/assets/dsh-connect-workbuddy-composer-credits.png",
+      "bytes": 71791,
+      "sha256": "352a9dd34aa644563eb4161c8beccaedda1ec99709bff288cfe8176914c1712c"
+    },
+    {
+      "path": "docs/assets/dsh-connect-workbuddy-usage-card.png",
+      "bytes": 178246,
+      "sha256": "0536dc04837526a11694c95aac70b0a574140367e2b4524475efe0914e96a7c3"
+    },
+    {
+      "path": "docs/assets/quota-notice-inline-mock.html",
+      "bytes": 6523,
+      "sha256": "95434536c6831109416be8aa1b689efa6263f7e8fd3999ea305398a1614ece56"
+    },
+    {
+      "path": "docs/assets/quota-notice-inline-mock.png",
+      "bytes": 279661,
+      "sha256": "7f9c9452696da374499aad1902942e326ea520bee51e6a33035fde71b8bf12b2"
+    },
+    {
+      "path": "docs/WINDOWS.md",
+      "bytes": 37327,
+      "sha256": "b817ce25d204223b42139cc6c78ad2b4dd192b28c5c6e13186ef231c4b625b9c"
+    },
+    {
+      "path": "icons/dsh-connect-workbuddy-128.png",
+      "bytes": 19813,
+      "sha256": "0bca7f003f3f091ae0b08032cd300a8709e1e5d09c60b8e7b938cdca190e964e"
+    },
+    {
+      "path": "icons/dsh-connect-workbuddy-64.png",
+      "bytes": 5970,
+      "sha256": "9e1e88aaaa3a8bdf599d6fe6075df9ef72fc1f4e437cab131f55e15ad89a592c"
+    },
+    {
+      "path": "lib/bin.d.ts",
+      "bytes": 1061,
+      "sha256": "65e244980e5eed0372fb1d15d9292d52df88c5d650c24f2641d470dad044218a"
+    },
+    {
+      "path": "lib/bin.js",
+      "bytes": 15708,
+      "sha256": "3edb10fe87a22f0493eef6227cff86e23ced035f34d4312edc570e2167a7bd26"
+    },
+    {
+      "path": "lib/client.js",
+      "bytes": 448823,
+      "sha256": "10ce35199c7386b98c19fc0cd3b89de4087d4af0f9b1121839bb0f515b188e9c"
+    },
+    {
+      "path": "lib/host-heartbeat-DEutghDy.js",
+      "bytes": 195470,
+      "sha256": "2a8e22a3bd2365c7a1c542ccccbbcd2e5073ec77b60528e4720bedccb103c1d0"
+    },
+    {
+      "path": "lib/index.d.ts",
+      "bytes": 186851,
+      "sha256": "32db4d9eeecd153803cce302b85a1b7d47c498546364719b7baf61bea61f8279"
+    },
+    {
+      "path": "lib/index.js",
+      "bytes": 325993,
+      "sha256": "1acf1e946fa5110a97606f3237dd461b77ff5c721d17acfd7a01f1a7019bd7c0"
+    },
+    {
+      "path": "lib/workbuddy-conversation-association.js",
+      "bytes": 4537,
+      "sha256": "a5f828e31c499aae5cea7057bbd7896c2d736c4f69457898b8d0dff348714674"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "8664487c9d35a29305726e57264eddc5287bb1254a2153d0a91cfec7c5ff27cb"
+    },
+    {
+      "path": "node_modules/@deepseek-ai/schemastery/lib/index.cjs",
+      "bytes": 23821,
+      "sha256": "aca1c1a47c7b6034feee01501aefca3e6dd97a0bac4fe334fd30647ae5a9e480"
+    },
+    {
+      "path": "node_modules/@deepseek-ai/schemastery/lib/index.mjs",
+      "bytes": 22988,
+      "sha256": "cfcbe46c7416bdb35ce891c252152bbf519e08199bede5930dd7cb880c65f1ef"
+    },
+    {
+      "path": "node_modules/@deepseek-ai/schemastery/lib/types/index.d.ts",
+      "bytes": 12506,
+      "sha256": "fca846c1420a192b7ae749da96afa0c9b5c57b2e7dff418153674f90200f4e27"
+    },
+    {
+      "path": "node_modules/@deepseek-ai/schemastery/lib/types/index.d.ts.map",
+      "bytes": 10848,
+      "sha256": "ee91a9f4c24c9bc82b5a37e8c84f690f5ec6e2385795902683557b0a08812e47"
+    },
+    {
+      "path": "node_modules/@deepseek-ai/schemastery/LICENSE",
+      "bytes": 1071,
+      "sha256": "034fb52b1d57360ecbae6cb1632a88f86fd7c3d3f5631a5f082710203dda0be7"
+    },
+    {
+      "path": "node_modules/@deepseek-ai/schemastery/package.json",
+      "bytes": 932,
+      "sha256": "81c5663da570b5072eecaa9d823dd600315308538ed1fd931b276523fb40d95f"
+    },
+    {
+      "path": "node_modules/@deepseek-ai/schemastery/README.md",
+      "bytes": 9687,
+      "sha256": "cdd54eece79b14c3672dfe94abb38b8d01c6ced57fb9975c4147fa17f81512d4"
+    },
+    {
+      "path": "node_modules/@deepseek-ai/schemastery/src/index.ts",
+      "bytes": 36623,
+      "sha256": "a6647b515659cf439b701fa9f9574c9c310ce3872d26a13a81e9fa4d02ba10ad"
+    },
+    {
+      "path": "package.json",
+      "bytes": 4485,
+      "sha256": "6e0781cb93cb8247ee940ff07f1e7fc84012b1b7e6e603f9c065851949f58b7d"
+    },
+    {
+      "path": "README.en.md",
+      "bytes": 66391,
+      "sha256": "6aa41e2505869e74d9109eb5c372cabf48049e6d9c182ed09ca75b2f319c497d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 64347,
+      "sha256": "4d4667652ef7ef43e6a878b0b4b23b4f7143e4569e546e2bea40156df2494dd2"
+    },
+    {
+      "path": "screenshots.json",
+      "bytes": 173,
+      "sha256": "a647b8df8315a6837f2ad37612a6621767cb755b6a624f191f6bfa0807dd938c"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 6686,
+      "sha256": "88e8f6a03eec37a1d6c5c7a5b81b24948438ec399ea75ec0b9032044a8cef3ce"
+    }
+  ],
+  "notes": [
+    "Source history is retained in Git.",
+    "Archive contains the modified installed package and its packaged dependency.",
+    "No account credentials, usage exports, conversation data or pool configuration are included.",
+    "Session association is experimental; billing aggregation remains unverified."
+  ]
+}

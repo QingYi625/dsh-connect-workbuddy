@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -1507,6 +1507,8 @@
+ 		...credential.enterpriseId === void 0 || credential.enterpriseId === "" ? { "X-No-Enterprise-Id": "1" } : { "X-Enterprise-Id": credential.enterpriseId },
+ 		...credential.domain === "" ? { "X-No-Department-Info": "1" } : { "X-Domain": credential.domain },
+ 		"X-Product": "SaaS",
++		"X-IDE-Name": "WorkBuddy",
++		"X-IDE-Type": "WorkBuddy",
+ 		...conversationHeaders()
+ 	};
+ }

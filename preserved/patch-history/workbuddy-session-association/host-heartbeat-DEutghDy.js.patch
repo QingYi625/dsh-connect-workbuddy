@@ -1,0 +1,66 @@
+--- before/host-heartbeat-DEutghDy.js
++++ after/host-heartbeat-DEutghDy.js
+@@ -1476,13 +1476,9 @@
+ * alongside `X-Conversation-ID` (that one alone still fails), and each of the
+ * extras is satisfied by the triple without it. Hence exactly three.
+ *
+-* VALUES. The gateway does not verify where these ids come from — any well-formed
+-* UUID passes — so nothing here is a secret and nothing is persisted. They are
+-* still freshly generated per request, matching the official client's
+-* `randomUUID()` per call: reusing one value across requests would forge a
+-* conversation identity the plugin does not actually have, and the first thing
+-* that would break is the upstream's own correlation of a session it is being
+-* told about twice under one id.
++* VALUES. With explicit DSH session/turn context, conversation and turn IDs
++* come from an account-scoped persistent link. Message IDs remain fresh for
++* every model call. Calls without trustworthy context retain independent IDs.
+ *
+ * APPLIED TO BOTH REGIONS on purpose. The CN gateway tolerates their absence
+ * today, so this is harmless there — and a header that is only ever sent on one
+@@ -1491,15 +1487,17 @@
+ *
+ * @returns the three headers, every value distinct.
+ */
+-function conversationHeaders() {
++function conversationHeaders(association) {
++	const valid = (value) => typeof value === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
++	const linked = valid(association?.conversationId) && valid(association?.conversationRequestId);
+ 	return {
+-		"X-Conversation-ID": randomUUID(),
+-		"X-Conversation-Request-ID": randomUUID(),
++		"X-Conversation-ID": linked ? association.conversationId : randomUUID(),
++		"X-Conversation-Request-ID": linked ? association.conversationRequestId : randomUUID(),
+ 		"X-Conversation-Message-ID": randomUUID()
+ 	};
+ }
+ /** Chat request headers, including the X-No-* conventions the official CLI uses. */
+-function chatHeaders(credential) {
++function chatHeaders(credential, association) {
+ 	return {
+ 		...commonHeaders(credential),
+ 		"Content-Type": "application/json",
+@@ -1509,7 +1507,7 @@
+ 		"X-Product": "SaaS",
+ 		"X-IDE-Name": "WorkBuddy",
+ 		"X-IDE-Type": "WorkBuddy",
+-		...conversationHeaders()
++		...conversationHeaders(association)
+ 	};
+ }
+ /** Refresh-endpoint headers; X-Refresh-Token appears here and nowhere else. */
+@@ -1986,13 +1984,13 @@
+ 		this.onFallback = onFallback;
+ 	}
+ 	/** POST the chat endpoint; a successful answer is the raw SSE response. */
+-	async chatStream(credential, bodyJson, signal) {
++	async chatStream(credential, bodyJson, signal, association) {
+ 		let response;
+ 		try {
+ 			response = await fetch(`${chatBase(credential)}/v2/chat/completions`, {
+ 				method: "POST",
+ 				headers: {
+-					...chatHeaders(credential),
++					...chatHeaders(credential, association),
+ 					"Authorization": `Bearer ${credential.accessToken}`
+ 				},
+ 				body: bodyJson,

@@ -1,3 +1,5 @@
+> **本地修改版保存仓库**：保留 4.12.0 上游源码、完整 Git 历史，以及含本地补丁的安装包快照。恢复和构建区别请先阅读 [FORK-NOTES.md](FORK-NOTES.md)。实验性会话关联的官方账单聚合效果尚未验证。
+
 <p align="center">
   <img src="docs/assets/dsh-connect-workbuddy-usage-card.png" width="640" alt="dsh-connect-workbuddy settings panel" />
 </p>

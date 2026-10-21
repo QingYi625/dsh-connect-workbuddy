@@ -1,0 +1,79 @@
+--- before/index.js
++++ after/index.js
+@@ -1,3 +1,4 @@
++import { activeTurnPosition, withWorkBuddyTurnAssociation, readWorkBuddyTurnPosition, createWorkBuddyConversationLinks } from "./workbuddy-conversation-association.js";
+ import { $ as WORKBUDDY_APP_EXECUTABLE_ENV, A as workbuddyAccountId, B as modelIdOfBody, C as defaultDesktopAuthDirs, D as isVaultAccountId, E as isEncryptedCredentialError, F as WorkBuddyUpstreamClient, G as regionOf, H as parseReasoning, I as classifyUpstreamError, J as lastRefusalFor, K as REFUSES_OFF_MODEL_IDS, L as declaredTools, M as CREDENTIAL_REJECTED_CODE, N as WORKBUDDY_FALLBACK_SYSTEM_PROMPT, O as legacyWorkbuddyOwnAuthPath, P as WorkBuddyCredentialRejectedError, Q as withEffectiveOff, R as isCredentialRejectedError, S as defaultDesktopAuthCandidates, T as hasEncryptedCredentialFields, U as parseUpstreamModel, V as parseCreditMultiplier, W as prepareChatBody, X as offRefused, Y as offDefaultFor, Z as recordRefusal, _ as WORKBUDDY_AUTH_FILENAME, a as readHostHeartbeat, b as WorkBuddyEncryptedCredentialError, c as WORKBUDDY_CONNECT_VERSION, ct as macosBundleExecutable, d as FALLBACK_WORKBUDDY_MODELS_GLOBAL, dt as readAtRestKey, et as clearAtRestKeyCache, f as WorkBuddyCatalog, ft as workbuddyAppExecutableCandidates, g as ENCRYPTED_CREDENTIAL_CODE, gt as writeFileAtomic, h as fallbackModelsFor, ht as withFileLock, i as processStartTimeMs, it as findWorkbuddyAppExecutable, j as workbuddyOwnAuthPath, k as parseWorkBuddyAuth, l as piAiRuntimeInfo, lt as macosNestedAppBundles, m as deriveCatalog, mt as resolveDshHome, n as clearHostHeartbeat, nt as deriveAtRestKeyId, o as workbuddyHostHeartbeatPath, ot as isEncryptedFieldWrapper, p as applyContextBudgets, q as defaultOffModelIds, r as isHeartbeatProcessAlive, rt as fetchAtRestKeyPayload, s as writeHostHeartbeat, st as isWorkbuddyBundle, t as WORKBUDDY_HOST_HEARTBEAT_FILENAME, tt as deriveAtRestKey, u as FALLBACK_WORKBUDDY_MODELS, ut as openEncryptedField, v as WORKBUDDY_AUTH_FILE_ENV, w as defaultDesktopAuthPath, x as authFileName, y as WorkBuddyCredentialStore, z as knownRegionOf } from "./host-heartbeat-DEutghDy.js";
+ import z from "@deepseek-ai/schemastery";
+ import { appendFile, mkdir, readFile, writeFile } from "node:fs/promises";
+@@ -674,7 +675,7 @@
+ 				}
+ 			} },
+ 			models: buildModels(),
+-			api: withContextRescue(withLegacyContext(openAICompletionsApi(), generation), options.resolveContextRescue)
++			api: withWorkBuddyTurnAssociation(withContextRescue(withLegacyContext(openAICompletionsApi(), generation), options.resolveContextRescue), options.resolveConversationPosition)
+ 		}),
+ 		getModels: () => buildModels()
+ 	};
+@@ -3026,6 +3027,7 @@
+ */
+ function createWorkBuddyShim(options) {
+ 	const { store, client, catalog } = options;
++	const conversationLinks = createWorkBuddyConversationLinks(join(resolveDshHome(), `.workbuddy-conversation-links.${options.associationRegion ?? "cn"}.json`), { withFileLock, writeFileAtomic });
+ 	const logger = options.logger;
+ 	const failoverAccount = options.failoverAccount;
+ 	const failoverShortfall = options.failoverShortfall;
+@@ -3168,7 +3170,17 @@
+ 		}
+ 		const controller = new AbortController();
+ 		res.on("close", () => controller.abort());
+-		let result = await client.chatStream(credential, prepared, controller.signal);
++		const position = readWorkBuddyTurnPosition(req.headers);
++		const chatOn = async (account) => {
++			let association;
++			if (position !== void 0) try {
++				association = await conversationLinks.resolve(position, workbuddyAccountId(account));
++			} catch {
++				logger?.warn("dsh-connect-workbuddy: conversation association unavailable; using independent request IDs");
++			}
++			return client.chatStream(account, prepared, controller.signal, association);
++		};
++		let result = await chatOn(credential);
+ 		const triedAccountIds = [];
+ 		/**
+ 		* The account the request STARTED on, and the reason it was abandoned.
+@@ -3238,7 +3250,7 @@
+ 			switchedFrom ??= describeAccount(credential);
+ 			switchedBecause ??= failoverReasonText(result);
+ 			credential = next;
+-			result = await client.chatStream(credential, prepared, controller.signal);
++			result = await chatOn(credential);
+ 		}
+ 		if (failures.length === 0 || failures[failures.length - 1]?.accountId !== workbuddyAccountId(credential)) recordAttempt(credential, result);
+ 		reportFailures();
+@@ -3303,7 +3315,7 @@
+ 			const retryTried = [...triedAccountIds, workbuddyAccountId(credential)];
+ 			let retryCredential = credential;
+ 			for (;;) {
+-				const attempt = await client.chatStream(retryCredential, prepared, controller.signal);
++				const attempt = await chatOn(retryCredential);
+ 				if (attempt.ok) {
+ 					writer.discard();
+ 					const retried = new RecoveryStream(res, gate, logger);
+@@ -6415,6 +6427,7 @@
+ 			store,
+ 			catalog,
+ 			shim: createWorkBuddyShim({
++				associationRegion: region,
+ 				store,
+ 				client,
+ 				catalog,
+@@ -7436,7 +7449,8 @@
+ 				provider: WORKBUDDY_PROVIDERS[region],
+ 				displayName: WORKBUDDY_PROVIDER_DISPLAY_NAMES[region],
+ 				resolveAttachments: () => ctx.get("attachments"),
+-				resolveContextRescue: () => contextRescue
++				resolveContextRescue: () => contextRescue,
++				resolveConversationPosition: (sessionId) => activeTurnPosition(hostService("agents")?.get(sessionId)?.phase)
+ 			});
+ 			invalidateCatalog = () => {
+ 				for (const region of REGION_KEYS) adapters[region].invalidate();
